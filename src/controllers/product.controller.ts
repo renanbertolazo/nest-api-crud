@@ -1,7 +1,29 @@
-import { Controller, HttpCode, Header, Post, Get, Put, Delete, Param, Body } from '@nestjs/common';
-import { Query, HttpStatus, Response, HttpException, UseFilters, ConsoleLogger, Res } from '@nestjs/common';
+import {
+  Controller,
+  HttpCode,
+  Header,
+  Post,
+  Get,
+  Put,
+  Delete,
+  Param,
+  Body,
+} from '@nestjs/common';
+import {
+  Query,
+  HttpStatus,
+  Response,
+  HttpException,
+  UseFilters,
+  ConsoleLogger,
+  Res,
+} from '@nestjs/common';
 import { ProductsService } from '../services/product.service';
-import { CreateProductDto, UpdateProductDto, ProductDto } from 'src/dtos/product';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  ProductDto,
+} from 'src/dtos/product';
 //import { Product } from 'src/interfaces/product.interface';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AxiosResponse } from 'axios';
@@ -10,7 +32,10 @@ import { HttpService } from '@nestjs/axios';
 
 @Controller('products')
 export class ProductController {
-  constructor(private productsService: ProductsService, private httpService: HttpService) {}
+  constructor(
+    private productsService: ProductsService,
+    private httpService: HttpService,
+  ) {}
 
   @Get(':id')
   @HttpCode(200)
@@ -23,7 +48,7 @@ export class ProductController {
   @HttpCode(200)
   @Header('Cache-Control', 'none')
   getAxios(): Observable<AxiosResponse<any[]>> {
-    return this.httpService.get('https://api.thecatapi.com/v1/categories'); 
+    return this.httpService.get('https://api.thecatapi.com/v1/categories');
   }
 
   @Get()
@@ -38,14 +63,17 @@ export class ProductController {
   @Header('Cache-Control', 'none')
   async create(@Body() createProductDto: CreateProductDto): Promise<any> {
     const result = await this.productsService.create(createProductDto);
-    
+
     return result;
   }
 
   @Put(':id')
   @HttpCode(200)
   @Header('Cache-Control', 'none')
-  async update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto): Promise<UpdateResult> {
+  async update(
+    @Param('id') id: number,
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<UpdateResult> {
     return this.productsService.update(updateProductDto, id);
   }
 

@@ -4,7 +4,7 @@ import { AllExceptionsFilter } from './common/providers/filters';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ValidationPipe } from './common/providers/pipes/validation.pipe';
 import { TransformInterceptor } from './common/providers/interceptors';
-import 'dotenv/config'
+import 'dotenv/config';
 
 //Para utilizar HTTPS...
 /* const httpsOptions = {
@@ -12,7 +12,7 @@ import 'dotenv/config'
   cert: fs.readFileSync('./secrets/public-certificate.pem'), */
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule/* , { httpsOptions } */);
+  const app = await NestFactory.create(AppModule /* , { httpsOptions } */);
   await app.listen(process.env.PORT);
 
   app.useGlobalPipes(new ValidationPipe());

@@ -1,3 +1,3 @@
 export class ListAllProductsDto {
-    limit: number;
+  limit: number;
 }

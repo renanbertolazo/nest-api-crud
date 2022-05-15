@@ -10,7 +10,7 @@ import { ValidationPipe } from 'src/common/providers/pipes/validation.pipe';
 import { TransformInterceptor } from 'src/common/providers/interceptors';
 
 @Module({
-  imports: [DatabaseModule, ProductModule, /* TypeOrmModule.forRoot() */],
+  imports: [DatabaseModule, ProductModule /* TypeOrmModule.forRoot() */],
   controllers: [AppController],
   providers: [
     AppService,
@@ -30,8 +30,6 @@ import { TransformInterceptor } from 'src/common/providers/interceptors';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes('products');
+    consumer.apply(LoggerMiddleware).forRoutes('products');
   }
 }

@@ -9,13 +9,13 @@ export class ProductsService {
   constructor(
     @Inject('PRODUCT_REPOSITORY')
     private productRepository: Repository<ProductEntity>,
-  ) { }
+  ) {}
 
   async findOne(cod_produto: number): Promise<ProductEntity> {
     return await this.productRepository.findOne({
       where: {
-        cod_produto: cod_produto
-      }
+        cod_produto: cod_produto,
+      },
     });
   }
 
@@ -24,7 +24,8 @@ export class ProductsService {
     product.nome = dto.nome;
     product.valor = dto.valor;
 
-    const queryRunner = this.productRepository.manager.connection.createQueryRunner();
+    const queryRunner =
+      this.productRepository.manager.connection.createQueryRunner();
 
     try {
       await queryRunner.startTransaction();
@@ -33,11 +34,10 @@ export class ProductsService {
       await queryRunner.commitTransaction();
 
       return result;
-
     } catch (error) {
       await queryRunner.rollbackTransaction();
     } finally {
-      await queryRunner.release()
+      await queryRunner.release();
     }
   }
 
@@ -49,11 +49,16 @@ export class ProductsService {
     return await this.productRepository.delete(cod_produto);
   }
 
-  async update(dto: UpdateProductDto, cod_produto: number): Promise<UpdateResult> {
-    return await this.productRepository.update({ cod_produto },
+  async update(
+    dto: UpdateProductDto,
+    cod_produto: number,
+  ): Promise<UpdateResult> {
+    return await this.productRepository.update(
+      { cod_produto },
       {
         nome: dto.nome,
-        valor: dto.valor
-      });
+        valor: dto.valor,
+      },
+    );
   }
 }
